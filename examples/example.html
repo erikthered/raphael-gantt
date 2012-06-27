@@ -22,8 +22,27 @@
   }
   </style>
 </head>
-<body onload="draw();">
+<body>
   <h1>raphael-gantt demo</h1>
   <div id="chart"></div>
+  <script type="text/javascript">
+      var chart = new GanttChart("chart");
+      var payload = [
+        {name : "Phase 1",
+          tasks : [
+            {name : "Task 1", length : 4, startOffset : 0},
+            {name : "Task 2", length : 6, startOffset : 1}
+          ]
+        },
+        {name : "Phase 2",
+          tasks : [
+            {name : "Task 3", length : 4, startOffset : 7},
+            {name : "Task 4", length : 2, startOffset : 11}
+          ]
+        }
+      ];
+      chart.loadData(payload);
+      chart.draw();
+  </script>
 </body>
 </html>
