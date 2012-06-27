@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Raphael Gantt Chart</title>
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <script type="text/javascript" src="../moment.js"></script>
+  <script type="text/javascript" src="../raphael.js"></script>
+  <script type="text/javascript" src="../raphael-gantt.js"></script>
+
+  <style type="text/css">
+  #chart{
+    width: 100%;
+    overflow: scroll;
+  }
+
+  #chart svg{
+    border: 2px solid black;
+    display: inline-block;
+  }
+  </style>
+</head>
+<body onload="draw();">
+  <h1>raphael-gantt demo</h1>
+  <div id="chart"></div>
+</body>
+</html>
