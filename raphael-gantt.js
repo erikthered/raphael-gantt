@@ -4,54 +4,58 @@ var gridSize = 25;
 
 var labelAreaSize = 100;
 
-var currentRow = 0;
-var totalRows = 0;
+// Starts at 1 so there is an empty row for headers
+var currentRow = 1;
 
 var paper;
 
 function draw(){
-  //TODO generate headers (dates or days of week)
+  // Get the list of dates for the project duration
   var dates = getDates();
+  // Calculate total graph width
   width = labelAreaSize + dates.length * gridSize;
-
+  // Generate the chart area
   paper = Raphael("chart", width, height);
-
-  currentRow++;
 
   grid();
   headers(dates);
 
   var phases = getPhases();
 
+  // Iterate through all the phases, print labels and child tasks
   for(p in phases){
-    var tasks = phases[p].tasks;
-    //TODO print phase name and bounds
+    //TODO print phase bounds
     var caption = paper.text(5,(currentRow*gridSize)+(gridSize/2),phases[p].name);
     caption.attr({"font-size":14 , "stroke":"none" , "fill":"black", "text-anchor":"start"});
 
     currentRow++;
 
+    var tasks = phases[p].tasks;
     for(t in tasks){
       bar(tasks[t]);
+      currentRow++;
     }
   }
 
 }
 
+// Draw the grid
 function grid(){
+  // Draw horizontal grid lines
   for(var y=gridSize; y < height; y+=gridSize){
     var pathExp = "M0," + y + "L" + width + "," + y;
     var gridLine = paper.path(pathExp);
     gridLine.attr({"stroke":"#000"});
   }
 
-  //Draw vertical lines
+  //Draw vertical grid lines (starts at the edge of the space allotted for phase/task labels)
   for(var x=labelAreaSize; x < width; x+=gridSize){
     var pathExp = "M" + x + ",0L" + x + "," + height;
     var gridLine = paper.path(pathExp);
   }
 }
 
+// Draws column headers, currently using M-D formatting
 function headers(dates){
   var currentCol = 0;
   for(d in dates){
@@ -61,6 +65,7 @@ function headers(dates){
   }
 }
 
+// Draws a task bar
 function bar(task){
   var x = task.startOffset*gridSize+labelAreaSize;
   var y = currentRow*gridSize;
@@ -78,11 +83,9 @@ function bar(task){
     bar.animate({"fill":"#000"},100);
   });
 
-  currentRow++;
-
-  return bar;
 }
 
+// Returns an array of dates for the duration of the project
 function getDates(){
   //TODO Parse start/end dates from data
   var startDate = moment();
@@ -99,6 +102,7 @@ function getDates(){
   return dates;
 }
 
+// Returns an array of phases
 function getPhases(){
   var phases = [
     {name : "Phase 1",
