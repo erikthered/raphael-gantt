@@ -27,22 +27,27 @@
   <div id="chart"></div>
   <script type="text/javascript">
       var chart = new GanttChart("chart");
-      var payload = [
-        {name : "Phase 1",
-          tasks : [
-            {name : "Task 1", length : 4, startOffset : 0},
-            {name : "Task 2", length : 6, startOffset : 1}
-          ]
-        },
-        {name : "Phase 2",
-          tasks : [
-            {name : "Task 3", length : 4, startOffset : 7},
-            {name : "Task 4", length : 2, startOffset : 11}
-          ]
-        }
-      ];
+      var payload = [{
+        name: "Project Name", startDate: "2012-06-28", endDate: "2012-07-10",
+        phases : [
+          {name : "Phase 1", startDate: "2012-06-28", endDate: "2012-07-04", 
+            tasks : [
+              {name : "Task 1", startDate: "2012-06-28", endDate: "2012-07-01"},
+              {name : "Task 2", startDate: "2012-06-29", endDate: "2012-07-04"}
+            ]
+          },
+          {name : "Phase 2", startDate: "2012-07-05", endDate: "2012-07-10",
+            tasks : [
+              {name : "Task 3", startDate: "2012-07-05", endDate: "2012-07-08"},
+              {name : "Task 4", startDate: "2012-07-09", endDate: "2012-07-10"}
+            ]
+          }
+        ]
+      }];
       chart.loadData(payload);
       chart.draw();
+
+      
   </script>
 </body>
 </html>

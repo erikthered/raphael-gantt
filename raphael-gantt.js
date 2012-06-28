@@ -8,7 +8,7 @@ function GanttChart(elementId){
 
 
   this.loadData = function(payload){
-    this.phases = payload;
+    this.project = payload;
   }
 
   this.draw = function(){
@@ -26,7 +26,7 @@ function GanttChart(elementId){
     this.headers(dates);
 
     // Iterate through all the phases, print labels and child tasks
-    var phases = this.phases;
+    var phases = this.project[0].phases;
     for(p in phases){
       //TODO print phase bounds
       var caption = this.paper.text(5,(this.currentRow*this.gridSize)+(this.gridSize/2),phases[p].name);
@@ -45,7 +45,7 @@ function GanttChart(elementId){
 
   // Gets the total number of rows
   this.getRows = function(){
-    var phases = this.phases;
+    var phases = this.project[0].phases;
     var rows = 1;
     for (p in phases){
       rows++;
@@ -85,9 +85,17 @@ function GanttChart(elementId){
 
   // Draws a task bar
   this.bar = function(task){
-    var x = task.startOffset*this.gridSize+this.labelAreaSize;
+    var dates = this.getDates();
+    var startDate = moment(task.startDate);
+    var endDate = moment(task.endDate);
+    endDate.add("days",1); // Add an extra day so that the bar actually encompasses the end date
+
+    var offset = moment.duration(startDate - dates[0]);
+
+    var x = offset.asDays()*this.gridSize+this.labelAreaSize;
     var y = this.currentRow*this.gridSize;
-    var barWidth = task.length*this.gridSize;
+    var duration = moment.duration(endDate-startDate);
+    var barWidth = (duration.asDays())*this.gridSize;
     var barHeight = this.gridSize;
 
     var bar = this.paper.rect(x, y, barWidth, barHeight);
@@ -106,13 +114,12 @@ function GanttChart(elementId){
   // Returns an array of dates for the duration of the project
   this.getDates = function(){
     //TODO Parse start/end dates from data
-    var startDate = moment();
-    var endDate = startDate.clone();
-    endDate.add("months",1);
+    var startDate = moment(this.project[0].startDate);
+    var endDate = moment(this.project[0].endDate);
 
     var dates = [];
 
-    while(startDate < endDate){
+    while(startDate <= endDate){
       dates.push(startDate.clone());
       startDate.add("days",1);
     }
