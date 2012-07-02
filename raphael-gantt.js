@@ -28,9 +28,11 @@ function GanttChart(elementId){
     // Iterate through all the phases, print labels and child tasks
     var phases = this.project[0].phases;
     for(p in phases){
-      //TODO print phase bounds
       var caption = this.paper.text(5,(this.currentRow*this.gridSize)+(this.gridSize/2),phases[p].name);
       caption.attr({"font-size":14 , "stroke":"none" , "fill":"black", "text-anchor":"start"});
+
+      //TODO print phase bounds
+      this.phaseLine(phases[p]);
 
       this.currentRow++;
 
@@ -81,6 +83,39 @@ function GanttChart(elementId){
       heading.attr({"text-anchor":"middle"});
       currentCol++;
     }
+  }
+
+  // Draw phase bounding shape
+  this.phaseLine = function(phase){
+    var dates = this.getDates();
+    var startDate = moment(phase.startDate);
+    var endDate = moment(phase.endDate);
+    endDate.add("days",1); // Add an extra day so that the bar actually encompasses the end date
+
+    var offset = moment.duration(startDate - dates[0]);
+
+    var x = offset.asDays()*this.gridSize+this.labelAreaSize;
+    var y = this.currentRow*this.gridSize+.25*this.gridSize;
+    var duration = moment.duration(endDate-startDate);
+    var barWidth = (duration.asDays())*this.gridSize;
+    var barHeight = this.gridSize/4;
+
+    var bar = this.paper.rect(x, y, barWidth, barHeight);
+    bar.attr({"fill":"#000"});
+
+    // Draw the starting bound triangle
+    var p1 = x+","+y;
+    var p2 = x+","+(y+.75*this.gridSize);
+    var p3 = (x+.5*this.gridSize)+","+y;
+    var startTriangle = this.paper.path("M"+p1+"L"+p2+"L"+p3+"Z");
+    startTriangle.attr({"fill":"#000"});
+
+    // Draw the ending bound triangle
+    var p1 = x+barWidth+","+y;
+    var p2 = x+barWidth+","+(y+.75*this.gridSize);
+    var p3 = ((x+barWidth)-.5*this.gridSize)+","+y;
+    var endTriangle = this.paper.path("M"+p1+"L"+p2+"L"+p3+"Z");
+    endTriangle.attr({"fill":"#000"});
   }
 
   // Draws a task bar
