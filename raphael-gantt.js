@@ -5,7 +5,7 @@ function GanttChart(elementId){
   this.gridSize = 25;
   this.labelAreaSize = 100;
   this.currentRow = 1; // Starts at 1 so there is an empty row for headers
-
+  this.phaseColor = "#AAA";
 
   this.loadData = function(payload){
     this.project = payload;
@@ -101,22 +101,22 @@ function GanttChart(elementId){
     var barHeight = this.gridSize/4;
 
     var bar = this.paper.rect(x, y, barWidth, barHeight);
-    bar.attr({"stroke":"#000"});
-    bar.attr({"fill":"#000"});
+    bar.attr({"stroke":this.phaseColor});
+    bar.attr({"fill":this.phaseColor});
 
     // Draw the starting bound triangle
     var p1 = x+","+y;
     var p2 = x+","+(y+.75*this.gridSize);
     var p3 = (x+.5*this.gridSize)+","+y;
     var startTriangle = this.paper.path("M"+p1+"L"+p2+"L"+p3+"Z");
-    startTriangle.attr({"fill":"#000"});
+    startTriangle.attr({"stroke":this.phaseColor,"fill":this.phaseColor});
 
     // Draw the ending bound triangle
     var p1 = x+barWidth+","+y;
     var p2 = x+barWidth+","+(y+.75*this.gridSize);
     var p3 = ((x+barWidth)-.5*this.gridSize)+","+y;
     var endTriangle = this.paper.path("M"+p1+"L"+p2+"L"+p3+"Z");
-    endTriangle.attr({"fill":"#000"});
+    endTriangle.attr({"stroke":this.phaseColor,"fill":this.phaseColor});
   }
 
   // Draws a task bar
