@@ -101,6 +101,7 @@ function GanttChart(elementId){
     var barHeight = this.gridSize/4;
 
     var bar = this.paper.rect(x, y, barWidth, barHeight);
+    bar.attr({"stroke":"#000"});
     bar.attr({"fill":"#000"});
 
     // Draw the starting bound triangle
