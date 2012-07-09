@@ -95,10 +95,10 @@ function GanttChart(elementId){
 
     var offset = moment.duration(startDate - dates[0]);
 
-    var x = offset.asDays()*this.gridSize+this.labelAreaSize;
+    var x = offset.asDays()*this.gridSize+this.labelAreaSize+this.cellpadding;
     var y = this.currentRow*this.gridSize+.25*this.gridSize;
     var duration = moment.duration(endDate-startDate);
-    var barWidth = (duration.asDays())*this.gridSize;
+    var barWidth = (duration.asDays())*this.gridSize-(2*this.cellpadding);
     var barHeight = this.gridSize/4;
 
     var bar = this.paper.rect(x, y, barWidth, barHeight);
@@ -107,14 +107,14 @@ function GanttChart(elementId){
 
     // Draw the starting bound triangle
     var p1 = x+","+y;
-    var p2 = x+","+(y+.75*this.gridSize);
+    var p2 = x+","+((y+.75*this.gridSize)-this.cellpadding);
     var p3 = (x+.5*this.gridSize)+","+y;
     var startTriangle = this.paper.path("M"+p1+"L"+p2+"L"+p3+"Z");
     startTriangle.attr({"stroke":this.phaseColor,"fill":this.phaseColor});
 
     // Draw the ending bound triangle
     var p1 = x+barWidth+","+y;
-    var p2 = x+barWidth+","+(y+.75*this.gridSize);
+    var p2 = x+barWidth+","+((y+.75*this.gridSize)-this.cellpadding);
     var p3 = ((x+barWidth)-.5*this.gridSize)+","+y;
     var endTriangle = this.paper.path("M"+p1+"L"+p2+"L"+p3+"Z");
     endTriangle.attr({"stroke":this.phaseColor,"fill":this.phaseColor});
