@@ -6,7 +6,10 @@ function GanttChart(elementId){
   this.labelAreaSize = 100;
   this.currentRow = 1; // Starts at 1 so there is an empty row for headers
   this.phaseColor = "#AAA";
+  this.taskColors = ["#C24704","#D9CC3C","#FFEB79","#A0E0A9","#00ADA7"];
   this.cellpadding = 4;
+
+  var colorCounter = 0;
 
   this.loadData = function(payload){
     this.project = payload;
@@ -41,6 +44,13 @@ function GanttChart(elementId){
       for(t in tasks){
         this.bar(tasks[t]);
         this.currentRow++;
+      }
+
+      // Cycle the selected color, tasks under a phase will have the same color
+      if(colorCounter < this.taskColors.length){
+        colorCounter++;
+      }else{
+        colorCounter = 0;
       }
     }
 
@@ -118,6 +128,7 @@ function GanttChart(elementId){
     var p3 = ((x+barWidth)-.5*this.gridSize)+","+y;
     var endTriangle = this.paper.path("M"+p1+"L"+p2+"L"+p3+"Z");
     endTriangle.attr({"stroke":this.phaseColor,"fill":this.phaseColor});
+
   }
 
   // Draws a task bar
@@ -139,11 +150,12 @@ function GanttChart(elementId){
     var caption = this.paper.text(10,y+(barHeight/2),task.name);
     caption.attr({"font-size":14 , "stroke":"none" , "fill":"black", "text-anchor":"start"});
 
-    bar.attr({"fill":"#000"});
+    var fill = this.taskColors[colorCounter];
+    bar.attr({"fill":fill});
     bar.hover(function(){
       bar.animate({"fill":"red"},100);
     }, function(){
-      bar.animate({"fill":"#000"},100);
+      bar.animate({"fill":fill},100);
     });
 
   }
