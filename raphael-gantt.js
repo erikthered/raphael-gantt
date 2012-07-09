@@ -6,6 +6,7 @@ function GanttChart(elementId){
   this.labelAreaSize = 100;
   this.currentRow = 1; // Starts at 1 so there is an empty row for headers
   this.phaseColor = "#AAA";
+  this.cellpadding = 2;
 
   this.loadData = function(payload){
     this.project = payload;
@@ -134,7 +135,7 @@ function GanttChart(elementId){
     var barWidth = (duration.asDays())*this.gridSize;
     var barHeight = this.gridSize;
 
-    var bar = this.paper.rect(x+2, y+2, barWidth-4, barHeight-4);
+    var bar = this.paper.rect(x+this.cellpadding, y+this.cellpadding, barWidth-(2*this.cellpadding), barHeight-(2*this.cellpadding));
     var caption = this.paper.text(10,y+(barHeight/2),task.name);
     caption.attr({"font-size":14 , "stroke":"none" , "fill":"black", "text-anchor":"start"});
 
