@@ -6,7 +6,7 @@ function GanttChart(elementId){
   this.labelAreaSize = 100;
   this.currentRow = 1; // Starts at 1 so there is an empty row for headers
   this.phaseColor = "#AAA";
-  this.cellpadding = 2;
+  this.cellpadding = 4;
 
   this.loadData = function(payload){
     this.project = payload;
