@@ -134,7 +134,7 @@ function GanttChart(elementId){
     var barWidth = (duration.asDays())*this.gridSize;
     var barHeight = this.gridSize;
 
-    var bar = this.paper.rect(x, y, barWidth, barHeight);
+    var bar = this.paper.rect(x+2, y+2, barWidth-4, barHeight-4);
     var caption = this.paper.text(10,y+(barHeight/2),task.name);
     caption.attr({"font-size":14 , "stroke":"none" , "fill":"black", "text-anchor":"start"});
 
