@@ -150,12 +150,17 @@ function GanttChart(elementId){
     var caption = this.paper.text(10,y+(barHeight/2),task.name);
     caption.attr({"font-size":14 , "stroke":"none" , "fill":"black", "text-anchor":"start"});
 
-    var fill = this.taskColors[colorCounter];
+    var colorString = this.taskColors[colorCounter];
+    var fill = Raphael.color(colorString);
     bar.attr({"fill":fill});
+
+    // Add glow effect on mouseover
+    var glow;
+    var glowRadius = this.cellpadding;
     bar.hover(function(){
-      bar.animate({"fill":"red"},100);
-    }, function(){
-      bar.animate({"fill":fill},100);
+      glow = bar.glow({"width":glowRadius,"opacity":0.75,"color":fill});
+    }, function(){ // Remove glow on mouseout
+      glow.remove();
     });
 
   }
