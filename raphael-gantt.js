@@ -3,7 +3,7 @@ function GanttChart(elementId){
   this.height = 500;
   this.width = 500;
   this.gridSize = 25;
-  this.labelAreaSize = 100;
+  this.labelAreaSize = 250;
   this.currentRow = 1; // Starts at 1 so there is an empty row for headers
   this.phaseColor = "#AAA";
   this.taskColors = ["#C24704","#D9CC3C","#FFEB79","#A0E0A9","#00ADA7"];
