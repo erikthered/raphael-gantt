@@ -44,3 +44,8 @@ Finally, call the draw method
 ### Dependencies
 * Raphaël
 * Moment.js
+
+### Example
+Here's a screenshot of what you'll end up with:
+
+![Gantt chart example](examples/example.png "Gantt chart example")
